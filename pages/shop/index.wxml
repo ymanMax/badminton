@@ -1,0 +1,26 @@
+<view class="container">
+  <view style="box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);overflow: hidden;">
+    <van-search value="{{ searchValue }}" placeholder="请输入搜索关键词" use-action-slot bind:change="onChange1" bind:search="getListData">
+      <view slot="action" bind:tap="getListData" style="padding: 0 24rpx;color: #55bf9b;font-weight: bold;">搜索</view>
+    </van-search>
+  </view>
+  <view class="top_box">
+    <van-tabs id="tabs" active="{{ active }}" bind:change="onChange">
+      <van-tab title="{{ item.dictLabel }}" name="{{ item.dictValue }}" wx:for="{{ tabList }}" wx:key="index">
+        <!-- 列表模块 -->
+        <view class="waterfall-container" wx:if="{{ shopList.length }}">
+          <block wx:for="{{shopList}}" wx:key="index">
+            <view class="strategy-item position_r" catch:tap="navigateToDetail" data-arg="{{ item }}">
+              <image class="strategy-image" src="{{imgHost}}{{item.image}}" mode="aspectFill"></image>
+              <view>
+                <view class="strategy-description">{{item.description}}</view>
+                <view style="margin-top: 6px;color: #e64340;">￥{{ item.price }}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+        <van-empty description="暂无商品信息" wx:else />
+      </van-tab>
+    </van-tabs>
+  </view>
+</view>

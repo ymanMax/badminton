@@ -1,0 +1,18 @@
+<!--pages/rcmmd_route/index.wxml-->
+<view class="container">
+  <!-- 列表模块 -->
+  <view class="route-list" wx:if="{{ listData.length }}">
+    <block wx:for="{{listData}}" wx:key="index">
+      <view class="route-item flex justify-content-between position_r" catch:tap="toDetail" data-arg="{{ item }}">
+        <image class="route-image" src="{{imgHost}}{{item.image}}"></image>
+        <view class="flex1 align_left flex flex-column">
+          <view class="route-title">{{item.name}}</view>
+          <view class="item-desc flex1">{{item.description}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <van-empty description="暂无可预约场地" wx:else />
+</view>
+
+

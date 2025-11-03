@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "towxml":"/towxml/towxml",
+    "van-icon": "@vant/weapp/icon/index"
+  },
+  "navigationBarTitleText": "场地详情"
+}

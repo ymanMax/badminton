@@ -1,0 +1,37 @@
+<view class="bg_color_white height_100">
+  <view class="form-item flex align-items-center">
+    <label>活动图片</label>
+    <view class="flex align-items-center flex1">
+      <image catchtap="previewImg" style="width: 60rpx;height: 60rpx;margin-right: 30rpx;" data-url="{{ actImg }}" src="{{imgHost}}{{actImg}}" mode="aspectFill" wx:if="{{actImg}}"/>
+      <button class="upload-btn" bindtap="chooseImg" size="mini" style="margin: 0;">
+        {{actImg ? '更换图片' : '上传图片'}}
+      </button>
+    </view>
+  </view>
+  <van-field label="活动名称" size="large" clearable model:value="{{ title }}" placeholder="请输入活动名称" />
+  <van-field label="活动描述" size="large" clearable model:value="{{ descp }}" placeholder="请输入活动描述" />
+  <van-field label="活动场馆" size="large" readonly value="{{ rangeList1[activityIndex1].name }}" placeholder="选择活动场馆" is-link bindtap="showDatetimePop3" />
+  <van-field label="活动类型" size="large" readonly value="{{ rangeList[activityIndex].dictLabel }}" placeholder="选择活动类型" is-link bindtap="showDatetimePop2" />
+  <van-field label="开始时间" size="large" readonly value="{{ startTime }}" placeholder="选择活动开始时间" is-link bindtap="showDatetimePop" />
+  <van-field label="结束时间" size="large" readonly value="{{ endTime }}" placeholder="选择活动结束时间" is-link bindtap="showDatetimePop1" />
+  <van-field type="number" label="活动人数" size="large" clearable maxlength="3" model:value="{{ num }}" placeholder="请输入活动人数" />
+  <view class="btn">
+    <van-button type="primary" block bind:click="submit" color="#55bf9b">创建活动</van-button>
+  </view>
+</view>
+
+<van-popup show="{{ showDatetimePop }}" position="bottom" bind:close="onClose">
+  <van-datetime-picker type="date" value="{{ currentDate }}" min-date="{{ minDate }}" formatter="{{ formatter }}" filter="{{ filter }}" bind:confirm="confirm" bind:cancel="hideDatetimePop" />
+</van-popup>
+
+<van-popup show="{{ showDatetimePop1 }}" position="bottom" bind:close="onClose">
+  <van-datetime-picker type="date" value="{{ currentDate1 }}" min-date="{{ minDate }}" formatter="{{ formatter }}" filter="{{ filter }}" bind:confirm="confirm1" bind:cancel="hideDatetimePop1" />
+</van-popup>
+
+<van-popup show="{{ showDatetimePop2 }}" position="bottom" bind:close="onClose">
+  <van-picker title="活动类型" show-toolbar value-key="dictLabel" columns="{{ rangeList }}" bind:cancel="onCancel" bind:confirm="onConfirm" />
+</van-popup>
+
+<van-popup show="{{ showDatetimePop3 }}" position="bottom" bind:close="onClose">
+  <van-picker title="活动场馆" show-toolbar value-key="name" columns="{{ rangeList1 }}" bind:cancel="onCancel" bind:confirm="onConfirm1" />
+</van-popup>

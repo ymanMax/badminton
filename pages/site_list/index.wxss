@@ -1,0 +1,77 @@
+
+.route-list{
+  margin: 0 24rpx;
+  background: #fff;
+}
+.route-item {
+  padding: 24rpx;
+  border-bottom: 1px solid #eee;
+}
+.route-item:last-child {
+  border-bottom: 0;
+}
+.route-image {
+  width: 140rpx;
+  height: 100rpx;
+  margin-right: 30rpx;
+}
+
+.route-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-class .van-dropdown-menu__title {
+  color: #55bf9b !important;
+}
+
+.route-status{
+  width: 120rpx;
+  text-align: center;
+  border-radius: 8rpx;
+  padding: 6rpx 12rpx;
+  margin-top: 20rpx;
+  color: #fff;
+  background: #55bf9b;
+}
+.empty{
+  background: #e64340;
+}
+.ope_btn{
+  border-radius: 8rpx;
+  padding: 6rpx 24rpx;
+  color: #ffffff;
+  background: #55bf9b;
+}
+picker{
+  width: 320rpx;
+  border-radius: 8rpx;
+  padding: 12rpx 24rpx;
+  background: #fff;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+}
+.time-filter-container{
+  padding: 24rpx 24rpx 40rpx;
+}
+.ope_btn1{
+  right: 24rpx;
+  font-size: 24rpx;
+}
+.item-price{
+  margin-top: 4rpx;
+  color: #e64340;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+.item-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}

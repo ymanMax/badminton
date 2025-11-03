@@ -1,0 +1,34 @@
+<view class="issueDetail">
+  <view style="padding: 24rpx 24rpx 0;">
+    <view class="f_size_17 f_weight_bold">场地简介：</view>
+    <view class="f_size_15" style="padding: 18rpx 0 50rpx;">{{ curInfo.description }}</view>
+  </view>
+  <view class="answer flex1 overflow_a">
+    <view class="detail">
+      <towxml nodes="{{ dataInfo }}" />
+    </view>
+    <view class="ope_btn ope_btn1 position_f" catch:tap="openDialog" data-arg="{{ item }}">立即预约</view>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{ show }}">
+  <view class="mask_box">
+    <van-icon name="close" class="close" size="24" catchtap="openDialog" />
+    <view class="f_weight_bold f_size_15 align_center" style="padding: 40rpx;">请选择预约时间</view>
+    <view class="time-filter-container">
+      <view class="flex align-items-center flex1">
+        <view class="time-filter-label" style="font-size: 32rpx; font-weight: bold;">预约时间：</view>
+        <picker mode="date" value="{{selectedDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange" style="margin-left: 20rpx;">
+          <view class="picker-view">{{selectedDate}}</view>
+        </picker>
+      </view>
+      <view class="flex align-items-center justify-content-between flex-wrap">
+        <view class="info_item {{ item.isReservation ? 'disabled' : '' }}" wx:for="{{ reservePlaceApplyList }}" wx:key="index" catchtap="toPre" data-arg="{{ item }}">
+          <view>{{ item.name }}</view>
+          <view wx:if="{{ item.isReservation }}">已预约</view>
+          <view wx:else>￥{{ item.price }}/场</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

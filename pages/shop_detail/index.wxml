@@ -1,0 +1,23 @@
+<view class="issueDetail">
+  <view class="answer flex1 overflow_a">
+    <view class="f_size_17 f_weight_bold">商品简介：</view>
+    <view class="f_size_15" style="padding: 18rpx 0 50rpx;">{{ curInfo.description }}</view>
+    <view class="f_size_17 f_weight_bold">商品销量：</view>
+    <view class="f_size_15" style="padding: 18rpx 0 50rpx;">{{ curInfo.saleNum }} 件</view>
+    <view class="f_size_17 f_weight_bold">商品库存：</view>
+    <view class="f_size_15" style="padding: 18rpx 0 50rpx;">{{ curInfo.stock }} 件</view>
+    <view class="f_size_17 f_weight_bold" style="padding: 18rpx 0 30rpx;">商品详情：</view>
+    <view class="detail">
+      <towxml nodes="{{ dataInfo }}" />
+    </view>
+    <view class="ope_btn ope_btn1 position_f" wx:if="{{ curInfo.stock != 0 }}" catch:tap="toPre">￥{{curInfo.price}} 立即购买</view>
+    <view class="ope_btn ope_btn1 position_f disabled" wx:else>暂无库存</view>
+  </view>
+</view>
+
+
+<van-dialog use-slot title="购买" show="{{ show }}" show-cancel-button confirm-button-text="付款" bind:close="onClose" bind:confirm="onConfirm">
+  <view style="padding: 30rpx;">
+    <van-card num="1" price="{{ curInfo.price }}" desc="{{ curInfo.description }}" title="{{ curInfo.name }}" thumb="{{ imgHost }}{{ curInfo.image }}" />
+  </view>
+</van-dialog>

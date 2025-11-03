@@ -1,0 +1,51 @@
+<!-- 轮播图 -->
+<swiper class="swiper" autoplay interval="3000" circular>
+    <block wx:for="{{swiperList}}" wx:key="id">
+        <swiper-item>
+            <image src="{{item.img}}" mode="widthFix" class="swiper-img" bind:tap="navigateToSite" data-id="{{item.id}}" />
+        </swiper-item>
+    </block>
+</swiper>
+<view style="padding: 24rpx;">
+  系统公告：{{ tips }}
+</view>
+<!-- 打卡圣地 -->
+<view class="f_size_17 f_weight_bold" style="padding: 24rpx;" wx:if="{{ hotData.length }}">热门活动</view>
+
+<!-- 双列图文 -->
+<view class="double-column" wx:if="{{ hotData.length }}">
+    <!-- 左侧大图 -->
+    <view class="big-column position_r" bind:tap="pageSkip" wx:if="{{ hotData[0] }}">
+        <image src="{{imgHost}}{{hotData[0].image}}" mode="aspectFill" class="column-img" />
+        <view class="img-desc">{{hotData[0].name}}</view>
+    </view>
+    <!-- 右侧大图 -->
+    <view class="big-column position_r" bind:tap="pageSkip" wx:if="{{ hotData[1] }}">
+        <image src="{{imgHost}}{{hotData[1].image}}" mode="aspectFill" class="column-img" />
+        <view class="img-desc">{{hotData[1].name}}</view>
+    </view>
+</view>
+<view class="venue-info-container flex justify-content-between align-items-center bg_color_white" style="padding: 20rpx;">
+    <text class="f_size_17 f_weight_bold">场馆信息</text>
+    <picker mode="selector" range="{{venueOptions}}" bindchange="onVenueChange" range-key="dictLabel">
+        <view class="picker flex justify-content-between align-items-center">
+            {{venueOptions[selectedVenue].dictLabel}}
+            <van-icon name="arrow-down" style="margin-left: 10rpx;" />
+        </view>
+    </picker>
+</view>
+<!-- 列表 -->
+<scroll-view scroll-y class="list-container" wx:if="{{ listData.length }}">
+    <block wx:for="{{listData}}" wx:key="id">
+        <view class="list-item" bind:tap="navigateToSite" data-id="{{ item.id }}">
+            <image src="{{imgHost}}{{item.image}}" mode="aspectFill" class="item-img" />
+            <view class="item-content flex flex-column justify-content-between">
+                <text class="item-title">{{item.name}}</text>
+                <text class="item-desc flex1">{{item.description}}</text>
+                <text class="item-price" style="margin-top: 20rpx;">营业时间：{{item.openHours}}</text>
+                <text class="item-price">场馆地址：{{item.address}}</text>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+<van-empty description="暂无场馆信息" wx:else />

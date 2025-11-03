@@ -1,0 +1,20 @@
+<view class="container">
+  <!-- 顶部模块 -->
+  <scroll-view scroll-x="true" class="tag-container">
+    <block wx:for="{{tags}}" wx:key="index">
+      <view class="tag-item {{selectedTag == item ? 'tag-selected' : ''}}" bindtap="selectTag" data-tag="{{item}}">
+        {{item}}
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 列表模块 -->
+  <view class="waterfall-container">
+    <block wx:for="{{strategyList}}" wx:key="index">
+      <view class="strategy-item">
+        <image class="strategy-image" src="{{item.image}}" mode="widthFix"></image>
+        <view class="strategy-description">{{item.description}}</view>
+      </view>
+    </block>
+  </view>
+</view>

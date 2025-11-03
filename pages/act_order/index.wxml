@@ -1,0 +1,24 @@
+<wxs src="/utils/wxmlFunc.wxs" module="tools"></wxs>
+
+<view class="height_100 bg_color_white">
+  <view wx:if="{{ orderList.length }}" class="order_box">
+    <view class="order_item position_r" wx:for="{{ orderList }}" wx:key="index">
+      <view class="f_size_12" style="padding: 24rpx 0;color: #757575;">
+        <view class="flex justify-content-between">
+          <image src="{{ imgHost }}{{ item.activityModel.image }}" style="width: 120rpx;margin-right: 24rpx;height: 120rpx;" />
+          <view class="flex1">
+            <view class="f_size_14 f_weight_bold" style="color: #000;">{{ item.activityModel.name }}</view>
+            <view class="f_size_14" style="color: #666;margin: 12rpx 0;">{{ item.activityModel.description }}</view>
+            <view style="margin-top: 12rpx;" wx:if="{{ item.startTm }}">活动时间：{{ item.startTm }}至{{ item.endTm }}</view>
+          </view>
+        </view>
+      </view>
+      <!-- <view class="ope_btn position_a" bind:tap="toDetail" data-arg="{{item}}" wx:if="{{ item.payStatus == 0 }}">去支付</view> -->
+      <view class="ope_btn position_a">
+        <view catch:tap="cancelOrder" data-arg="{{ item }}">取消</view>
+      </view>
+    </view>
+    <view class="align_center f_size_10" style="margin: 8rpx auto;color: #999;background: #f7f8f9;">-到底啦-</view>
+  </view>
+  <van-empty wx:else description="暂无订单" />
+</view>

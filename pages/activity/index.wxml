@@ -1,0 +1,45 @@
+<view class="flex flex-column height_100">
+    <view class="flex align-items-center justify-content-between" style="padding-right: 24rpx;">
+        <view class="venue-info-container flex justify-content-between align-items-center" style="padding: 20rpx;">
+            <text class="f_size_15 f_weight_bold">活动信息：</text>
+            <picker mode="selector" range="{{venueOptions}}" bindchange="onVenueChange" range-key="dictLabel">
+                <view class="picker flex justify-content-between align-items-center">
+                    {{venueOptions[selectedVenue].dictLabel}}
+                    <van-icon name="arrow-down" style="margin-left: 10rpx;" />
+                </view>
+            </picker>
+        </view>
+        <view class="ope_btn f_size_15" bind:tap="onCreate">创建活动</view>
+    </view>
+    <!-- 列表 -->
+    <view class="flex1 overflow_h">
+        <scroll-view scroll-y class="list-container height_100" wx:if="{{ listData.length }}">
+            <block wx:for="{{listData}}" wx:key="id">
+                <view class="list-item position_r">
+                    <image src="{{imgHost}}{{item.image}}" mode="aspectFill" class="item-img" />
+                    <view class="item-content flex flex-column justify-content-between">
+                        <text class="item-title">{{item.name}}</text>
+                        <text class="item-desc flex1">{{item.description}}</text>
+                        <view class="f_size_12">活动人数：<text style="color: #000">{{ item.peopleNum }}</text></view>
+                        <view class="f_size_12" style="margin:2rpx 0;">剩余名额：<text style="color: #e64340">{{ item.peopleNum - item.applyNum }}</text></view>
+                        <view class="f_size_12">活动时间：<text style="color: #000">{{item.startTm}} 至 {{ item.endTm }}</text></view>
+                    </view>
+                    <view class="ope_btn ope_btn1 position_a {{ item.maxNum ? 'color' : '' }}" wx:if="{{ item.maxNum }}">已满</view>
+                    <view class="ope_btn ope_btn1 position_a" catch:tap="toPre" data-arg="{{ item }}" wx:else>参加</view>
+                </view>
+            </block>
+        </scroll-view>
+        <van-empty description="暂无活动信息" wx:else />
+    </view>
+</view>
+
+<van-dialog
+  use-slot
+  title="参加活动"
+  show="{{ show }}"
+  show-cancel-button
+  confirm-button-color="#55bf9b"
+  bind:close="onClose"
+  bind:confirm="onConfirm">
+  <view class="align_center" style="padding: 80rpx 30rpx;">确定参加{{ curInfo.name }}吗？</view>
+</van-dialog>
