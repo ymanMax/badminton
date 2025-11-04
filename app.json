@@ -20,7 +20,8 @@
     "pages/strategy/index",
     "pages/choose/index",
     "pages/orderDetail/index",
-    "pages/msgInfo/index"
+    "pages/msgInfo/index",
+    "pages/stats/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
