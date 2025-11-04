@@ -1,0 +1,70 @@
+<!--pages/stats/index.wxml-->
+<view class="stats-container">
+  <!-- 筛选区域 -->
+  <view class="filter-section">
+    <view class="filter-title">数据统计</view>
+    
+    <!-- 年份选择器 -->
+    <view class="filter-item">
+      <view class="filter-label">选择年份</view>
+      <picker bindchange="bindYearChange" range="{{[2023, 2024, 2025]}}">
+        <view class="picker">
+          {{year}}年
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 月份选择器 -->
+    <view class="filter-item">
+      <view class="filter-label">选择月份</view>
+      <picker bindchange="bindMonthChange" range="{{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}}">
+        <view class="picker">
+          {{month}}月
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 场馆选择器 -->
+    <view class="filter-item">
+      <view class="filter-label">选择场馆</view>
+      <picker bindchange="bindVenueChange" range="{{venues}}">
+        <view class="picker">
+          {{selectedVenue || '请选择场馆'}}
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 图表类型切换 -->
+    <view class="chart-type-section">
+      <view class="filter-label">图表类型</view>
+      <view class="chart-type-buttons">
+        <button 
+          class="chart-type-btn {{chartType === 'bar' ? 'active' : ''}}"
+          bindtap="changeChartType"
+          data-type="bar"
+        >
+          月度统计
+        </button>
+        <button 
+          class="chart-type-btn {{chartType === 'line' ? 'active' : ''}}"
+          bindtap="changeChartType"
+          data-type="line"
+        >
+          每日统计
+        </button>
+        <button 
+          class="chart-type-btn {{chartType === 'pie' ? 'active' : ''}}"
+          bindtap="changeChartType"
+          data-type="pie"
+        >
+          占比分析
+        </button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 图表展示区域 -->
+  <view class="chart-section">
+    <ec-canvas id="mychart-dom" canvas-id="mychart-dom" ec="{{ec}}"></ec-canvas>
+  </view>
+</view>

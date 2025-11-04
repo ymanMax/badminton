@@ -1,0 +1,107 @@
+/* pages/stats/index.wxss */
+.stats-container {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+.filter-section {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.filter-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 15rpx;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+
+.filter-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.picker {
+  flex: 1;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: #f8f9fa;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+  color: #333;
+  text-align: right;
+}
+
+.chart-type-section {
+  margin-top: 30rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.chart-type-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15rpx;
+  padding: 0 20rpx;
+}
+
+.chart-type-btn {
+  width: 200rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  border-radius: 35rpx;
+  border: 2rpx solid #e4e7ed;
+  background-color: #fff;
+  color: #606266;
+  transition: all 0.3s;
+}
+
+.chart-type-btn.active {
+  background-color: #409eff;
+  color: #fff;
+  border-color: #409eff;
+}
+
+.chart-section {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  height: 600rpx;
+}
+
+ec-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* 适配不同屏幕尺寸 */
+@media (max-height: 700px) {
+  .chart-section {
+    height: 450rpx;
+  }
+}
+
+@media (min-height: 800px) {
+  .chart-section {
+    height: 700rpx;
+  }
+}
