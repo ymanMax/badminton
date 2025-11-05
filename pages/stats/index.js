@@ -68,7 +68,7 @@ Page({
     }
   },
 
-  onLoad: function() {
+  onReady: function() {
     // 获取ec-canvas组件
     this.ecComponent = this.selectComponent('#mychart-dom');
     // 初始化图表
@@ -76,6 +76,14 @@ Page({
   },
 
   initChart: function() {
+    if (!this.ecComponent) {
+      wx.showToast({
+        title: '图表组件未找到',
+        icon: 'none'
+      });
+      return;
+    }
+    
     this.ecComponent.init((canvas, width, height, dpr) => {
       // 初始化echarts实例
       const chart = echarts.init(canvas, null, {
