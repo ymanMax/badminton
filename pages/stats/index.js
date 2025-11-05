@@ -1,5 +1,5 @@
 // pages/stats/index.js
-import * as echarts from '../../utils/echarts';
+import * as echarts from 'echarts-for-weixin';
 
 Page({
   data: {
