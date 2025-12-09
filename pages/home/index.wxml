@@ -49,3 +49,14 @@
     </block>
 </scroll-view>
 <van-empty description="暂无场馆信息" wx:else />
+
+<!-- 消息入口 -->
+<view class="message-entrance"
+      style="left: {{messageBtnLeft}}rpx; bottom: {{messageBtnBottom}}rpx;"
+      bindtouchstart="onMessageBtnTouchStart"
+      bindtouchmove="onMessageBtnTouchMove"
+      bindtouchend="onMessageBtnTouchEnd"
+      bindtap="goToMessageList">
+  <van-icon name="comment-o" size="48" color="#fff" />
+  <view class="unread-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+</view>

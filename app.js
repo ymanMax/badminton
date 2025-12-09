@@ -127,6 +127,7 @@ App({
     imgHost: 'http://111.229.213.248:7012', // 图片请求地址
     backNeedFresh: false,
     openId: '',
+    unreadMessageCount: 0, // 未读消息数量
   },
   towxml :require('/towxml/index'),
   ...util,

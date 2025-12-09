@@ -1,8 +1,75 @@
-<view wx:if="{{ msgList.length }}" class="order_box">
-  <view class="order_item" wx:for="{{ msgList }}" wx:key="index" bind:tap="toDetail" data-arg="{{item}}">
-    <view class="f_size_15 f_weight_bold">{{ item.title }}</view>
-    <view class="f_size_13" style="color: #666;margin-top: 12rpx;">{{ item.content }}</view>
+<!-- 消息列表页面 -->
+<wxs src="../../utils/msg.wxs" module="msgUtil" />
+<view class="message-container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="header-title">消息通知</text>
+    <view class="header-actions">
+      <van-button
+        size="small"
+        plain
+        type="primary"
+        bindtap="markAllAsRead"
+        wx:if="{{msgUtil.shouldShowMarkAllReadBtn(unreadCount)}}">
+        全部已读
+      </van-button>
+      <van-button
+        size="small"
+        plain
+        type="danger"
+        bindtap="clearAllMessages"
+        wx:if="{{msgUtil.shouldShowClearAllBtn(msgList.length)}}">
+        清空消息
+      </van-button>
+    </view>
   </view>
-  <view class="align_center f_size_10" style="margin: 8rpx;color: #999;">-到底啦-</view>
+
+  <!-- 消息列表 -->
+  <view class="message-list" wx:if="{{msgUtil.shouldShowMessageList(msgList.length)}}">
+    <van-swipe-cell
+      wx:for="{{msgList}}"
+      wx:key="id"
+      right-width="{{60}}"
+      bind:close="onSwipeClose">
+      <view class="message-item {{msgUtil.getMessageItemClass(item.isRead)}}"
+            bindtap="viewMessage"
+            data-id="{{item.id}}">
+        <!-- 消息图标 -->
+        <view class="message-icon {{msgUtil.getMessageIconClass(item.type)}}">
+          <van-icon
+            name="{{msgUtil.getMessageIcon(item.type)}}"
+            size="32"
+            color="#fff" />
+        </view>
+
+        <!-- 消息内容 -->
+        <view class="message-content">
+          <view class="message-header">
+            <text class="message-title">{{item.title}}</text>
+            <text class="message-time">{{item.createTime}}</text>
+          </view>
+          <view class="message-body">
+            <text class="message-text">{{item.content}}</text>
+          </view>
+        </view>
+
+        <!-- 未读标识 -->
+        <view class="unread-dot" wx:if="{{msgUtil.shouldShowUnreadDot(item.isRead)}}"></view>
+      </view>
+
+      <!-- 右侧滑动操作 -->
+      <view slot="right" class="swipe-actions">
+        <view class="action-delete" bindtap="deleteMessage" data-id="{{item.id}}">
+          删除
+        </view>
+      </view>
+    </van-swipe-cell>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <van-empty
+      image="https://img.yzcdn.cn/vant/empty-image.png"
+      description="暂无消息通知" />
+  </view>
 </view>
-<van-empty wx:else description="暂无消息" />

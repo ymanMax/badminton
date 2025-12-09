@@ -22,9 +22,21 @@ Page({
     venueOptions: [],
     selectedVenue: '0',
     activeIndex: '',
+    // 消息相关
+    messageBtnLeft: 680, // 初始位置（右侧）
+    messageBtnBottom: 200,
+    startX: 0,
+    startY: 0,
+    isDragging: false,
+    unreadCount: 3, // 模拟未读消息数量
   },
   onLoad() {
     this.getDict();
+    this.updateUnreadCount();
+  },
+
+  onShow() {
+    this.updateUnreadCount();
   },
   getDict() {
     app.request('post', 'common/getDictTypeList', {}, (res) => {
@@ -107,5 +119,98 @@ Page({
       selectedVenue: index
     });
     this.getListData();
+  },
+
+  // 消息入口触摸开始
+  onMessageBtnTouchStart: function (e) {
+    this.setData({
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      isDragging: false
+    });
+  },
+
+  // 消息入口触摸移动
+  onMessageBtnTouchMove: function (e) {
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const deltaX = currentX - this.data.startX;
+    const deltaY = currentY - this.data.startY;
+
+    // 如果移动距离超过10rpx，则认为是拖拽
+    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+      this.setData({
+        isDragging: true
+      });
+
+      // 获取屏幕宽度和高度
+      const { windowWidth, windowHeight } = wx.getSystemInfoSync();
+      const btnWidth = 100; // 按钮宽度（rpx）
+      const btnHeight = 100; // 按钮高度（rpx）
+
+      // 计算新位置（转换为rpx）
+      let newLeft = (currentX / windowWidth) * 750 - btnWidth / 2;
+      let newBottom = ((windowHeight - currentY) / windowHeight) * 750 - btnHeight / 2;
+
+      // 边界检查
+      newLeft = Math.max(0, Math.min(newLeft, 750 - btnWidth));
+      newBottom = Math.max(0, Math.min(newBottom, 750 * (windowHeight / windowWidth) - btnHeight));
+
+      this.setData({
+        messageBtnLeft: newLeft,
+        messageBtnBottom: newBottom
+      });
+    }
+  },
+
+  // 消息入口触摸结束
+  onMessageBtnTouchEnd: function (e) {
+    if (this.data.isDragging) {
+      // 获取屏幕宽度
+      const { windowWidth } = wx.getSystemInfoSync();
+      const screenCenterX = 750 / 2; // 屏幕中心（rpx）
+      const btnWidth = 100; // 按钮宽度（rpx）
+
+      // 判断距离左右屏幕的距离
+      const currentLeft = this.data.messageBtnLeft;
+      const distanceToLeft = currentLeft;
+      const distanceToRight = 750 - (currentLeft + btnWidth);
+
+      // 自动贴边到距离较近的一侧
+      let newLeft;
+      if (distanceToLeft < distanceToRight) {
+        newLeft = 0; // 贴左边
+      } else {
+        newLeft = 750 - btnWidth; // 贴右边
+      }
+
+      this.setData({
+        messageBtnLeft: newLeft
+      });
+    }
+  },
+
+  // 跳转到消息列表页面
+  goToMessageList: function (e) {
+    // 如果是拖拽状态，则不跳转
+    if (this.data.isDragging) {
+      return;
+    }
+
+    wx.navigateTo({
+      url: '/pages/msgInfo/index'
+    });
+  },
+
+  /**
+   * 更新未读消息数量
+   */
+  updateUnreadCount: function () {
+    const messages = wx.getStorageSync('messageList') || [];
+    const unreadCount = messages.filter(msg => !msg.isRead).length;
+
+    this.setData({
+      unreadCount: unreadCount
+    });
   }
 })
