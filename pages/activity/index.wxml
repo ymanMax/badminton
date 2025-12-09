@@ -23,6 +23,51 @@
                         <view class="f_size_12">活动人数：<text style="color: #000">{{ item.peopleNum }}</text></view>
                         <view class="f_size_12" style="margin:2rpx 0;">剩余名额：<text style="color: #e64340">{{ item.peopleNum - item.applyNum }}</text></view>
                         <view class="f_size_12">活动时间：<text style="color: #000">{{item.startTm}} 至 {{ item.endTm }}</text></view>
+
+                        <!-- 评分和评论统计 -->
+                        <view class="rating-stats flex align-items-center justify-content-between" style="margin-top: 10rpx;">
+                            <view class="avg-rating flex align-items-center">
+                                <text class="star-icon">★</text>
+                                <text style="color: #ff6b35; margin-left: 5rpx;">{{item.avgRating}}</text>
+                                <text style="color: #999; margin-left: 5rpx;">({{item.commentCount}}条评论)</text>
+                            </view>
+                            <view class="rate-btn" bind:tap="openRatingModal" data-activity="{{item}}">
+                                <text style="color: #55bf9b; font-size: 26rpx;">我要评论</text>
+                            </view>
+                        </view>
+
+                        <!-- 评论区域 -->
+                        <view class="comments-section" style="margin-top: 15rpx; border-top: 1px solid #eee; padding-top: 15rpx;">
+                            <!-- 评论列表 -->
+                            <view class="comments-list" wx:if="{{item.comments.length > 0}}">
+                                <block wx:for="{{expandedComments[item.id] ? item.comments : item.comments.slice(0, commentPageSize)}}" wx:key="id" wx:for-item="comment">
+                                    <view class="comment-item" style="margin-bottom: 15rpx; padding-bottom: 15rpx; border-bottom: 1px solid #f5f5f5;">
+                                        <view class="comment-header flex align-items-center justify-content-between">
+                                            <text class="commenter-name" style="color: #333; font-weight: 500;">{{comment.userName}}</text>
+                                            <view class="comment-rating flex align-items-center">
+                                                <block wx:for="{{5}}" wx:key="*this">
+                                                    <text class="star-rating {{index < comment.rating ? 'active' : ''}}" style="color: #ddd; font-size: 22rpx;">★</text>
+                                                </block>
+                                            </view>
+                                        </view>
+                                        <text class="comment-content" style="color: #666; margin-top: 8rpx; display: block; line-height: 1.4;">{{comment.content}}</text>
+                                        <text class="comment-time" style="color: #999; font-size: 22rpx; margin-top: 8rpx; display: block;">{{comment.createTm}}</text>
+                                    </view>
+                                </block>
+
+                                <!-- 展开/收起按钮 -->
+                                <view wx:if="{{item.comments.length > commentPageSize}}" class="toggle-comments" bind:tap="toggleComments" data-activity-id="{{item.id}}">
+                                    <text style="color: #55bf9b; font-size: 26rpx; text-align: center; display: block;">
+                                        {{expandedComments[item.id] ? '收起' : '查看更多评论'}}
+                                    </text>
+                                </view>
+                            </view>
+
+                            <!-- 暂无评论 -->
+                            <view class="no-comments" wx:else style="text-align: center; color: #999; padding: 20rpx 0;">
+                                <text>暂无评论，快来发表你的看法吧！</text>
+                            </view>
+                        </view>
                     </view>
                     <view class="ope_btn ope_btn1 position_a {{ item.maxNum ? 'color' : '' }}" wx:if="{{ item.maxNum }}">已满</view>
                     <view class="ope_btn ope_btn1 position_a" catch:tap="toPre" data-arg="{{ item }}" wx:else>参加</view>
@@ -42,4 +87,51 @@
   bind:close="onClose"
   bind:confirm="onConfirm">
   <view class="align_center" style="padding: 80rpx 30rpx;">确定参加{{ curInfo.name }}吗？</view>
+</van-dialog>
+
+<!-- 评分弹窗 -->
+<van-dialog
+  use-slot
+  title="评论活动"
+  show="{{ showRatingModal }}"
+  show-cancel-button
+  confirm-button-text="提交评论"
+  cancel-button-text="取消"
+  confirm-button-color="#55bf9b"
+  bind:close="closeRatingModal"
+  bind:confirm="submitRating"
+  style="width: 90%; max-width: 600rpx;">
+
+  <view class="rating-modal-content">
+    <!-- 活动名称 -->
+    <view class="activity-name" style="text-align: center; margin-bottom: 30rpx; font-weight: 500; color: #333;">
+      {{curInfo.name}}
+    </view>
+
+    <!-- 评分星星 -->
+    <view class="rating-stars flex justify-content-center align-items-center" style="margin-bottom: 30rpx;">
+      <block wx:for="{{5}}" wx:key="*this">
+        <text class="star {{index < curRating ? 'active' : ''}}"
+              data-rating="{{index + 1}}"
+              bind:tap="selectRating"
+              style="font-size: 50rpx; margin: 0 10rpx; color: #ddd;">★</text>
+      </block>
+    </view>
+
+    <!-- 评论输入框 -->
+    <view class="comment-input-section">
+      <textarea
+        class="comment-textarea"
+        placeholder="请输入您的评论（10-500字）"
+        value="{{curComment}}"
+        bindinput="inputComment"
+        maxlength="500"
+        style="width: 100%; min-height: 150rpx; padding: 20rpx; border: 1px solid #eee; border-radius: 8rpx; font-size: 28rpx; line-height: 1.4; box-sizing: border-box; background: #fafafa;"></textarea>
+
+      <!-- 字数统计 -->
+      <view class="word-count flex justify-content-end" style="margin-top: 10rpx; font-size: 24rpx; color: #999;">
+        <text>{{curComment.length}}/500</text>
+      </view>
+    </view>
+  </view>
 </van-dialog>
