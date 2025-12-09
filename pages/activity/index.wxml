@@ -26,6 +26,9 @@
                     </view>
                     <view class="ope_btn ope_btn1 position_a {{ item.maxNum ? 'color' : '' }}" wx:if="{{ item.maxNum }}">已满</view>
                     <view class="ope_btn ope_btn1 position_a" catch:tap="toPre" data-arg="{{ item }}" wx:else>参加</view>
+                    <view class="share_btn position_a" catch:tap="onShareClick" data-arg="{{ item }}">
+                      <van-icon name="share-o" size="24rpx" color="#fff" />
+                    </view>
                 </view>
             </block>
         </scroll-view>
