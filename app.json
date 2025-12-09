@@ -16,6 +16,7 @@
     "pages/act_order/index",
     "pages/place_order/index",
     "pages/userInfo/index",
+    "pages/points_detail/index",
     "pages/rcmmd_food/index",
     "pages/strategy/index",
     "pages/choose/index",

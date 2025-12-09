@@ -11,6 +11,12 @@
       </view>
     </view>
   </view>
+  <!-- 积分余额显示区域 -->
+  <view class="points-balance-box">
+    <view class="points-title">我的积分</view>
+    <view class="points-value">{{ pointsBalance }}</view>
+    <view class="points-desc">可用于兑换商品或抵扣消费</view>
+  </view>
   <view class="my-bar1">
     <view class="flex align-items-center" style="background: #fff;border-bottom: 1px solid #ddd;padding: 0 32rpx;" wx:for="{{ menuList }}" wx:key="index">
       <van-icon size="18" name="{{ item.icon }}" color="#333" />

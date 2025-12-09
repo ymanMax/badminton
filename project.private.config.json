@@ -3,13 +3,33 @@
     "miniprogram": {
       "list": [
         {
-          "name": "stats",
-          "pathName": "pages/stats/index",
+          "name": "pages/userInfo/index",
+          "pathName": "pages/userInfo/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
         }
       ]
     }
+  },
+  "libVersion": "3.11.3",
+  "projectname": "mini-badminton",
+  "setting": {
+    "urlCheck": false,
+    "coverView": false,
+    "lazyloadPlaceholderEnable": false,
+    "skylineRenderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showShadowRootInWxmlPanel": false,
+    "useStaticServer": false,
+    "useLanDebug": false,
+    "showES6CompileOption": false,
+    "compileHotReLoad": true,
+    "checkInvalidKey": true,
+    "ignoreDevUnusedFiles": true,
+    "bigPackageSizeSupport": false
   }
 }

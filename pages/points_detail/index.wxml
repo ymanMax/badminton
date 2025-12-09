@@ -1,0 +1,60 @@
+<!-- 导入wxs字典映射工具 -->
+<wxs src="/utils/dictionary.wxs" module="dict" />
+
+<view class="points-detail">
+  <!-- 页面头部积分余额展示 -->
+  <view class="points-header">
+    <view class="header-title">当前积分</view>
+    <view class="header-balance">{{ pointsBalance }}</view>
+    <view class="header-desc">可用于兑换商品或抵扣消费</view>
+  </view>
+
+  <!-- 积分明细列表 -->
+  <view class="points-list">
+    <van-cell-group inset>
+      <van-cell
+        wx:for="{{ pointsList }}"
+        wx:key="id"
+        class="points-item"
+        is-link
+      >
+        <view slot="icon" class="item-icon">
+          <van-icon
+            name="{{ item.amount > 0 ? 'add-o' : 'minus' }}"
+            color="{{ item.amount > 0 ? '#07c160' : '#f53f3f' }}"
+          />
+        </view>
+
+        <view slot="title" class="item-content">
+          <view class="item-type">{{ dict.getPointsChangeTypeDesc(item.type) }}</view>
+          <view class="item-time">{{ dict.formatDate(item.createTime) }}</view>
+        </view>
+
+        <view slot="right-icon" class="item-amount">
+          <view class="amount-value {{ item.amount > 0 ? 'amount-increase' : 'amount-decrease' }}">
+            {{ dict.getPointsChangeSymbol(item.amount) }}{{ item.amount }}
+          </view>
+          <view class="amount-balance">余额: {{ item.balance }}</view>
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+
+  <!-- 加载状态提示 -->
+  <view class="loading-status" wx:if="{{ loading }}">
+    <van-loading size="32rpx" color="#1989fa" />
+    <text class="loading-text">正在加载更多...</text>
+  </view>
+
+  <!-- 没有更多数据提示 -->
+  <view class="no-more" wx:if="{{ !loading && !hasMore }}">
+    <text class="no-more-text">没有更多数据了</text>
+  </view>
+
+  <!-- 空数据状态 -->
+  <view class="empty-state" wx:if="{{ pointsList.length === 0 && !loading }}">
+    <van-icon name="gift-o" size="80rpx" color="#ccc" />
+    <view class="empty-text">暂无积分明细</view>
+    <view class="empty-desc">参与活动或购物可以获得积分</view>
+  </view>
+</view>

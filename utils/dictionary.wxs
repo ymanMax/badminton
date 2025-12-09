@@ -1,0 +1,68 @@
+// 字典映射工具类
+var dictionary = {
+  // 积分变动类型映射
+  pointsChangeType: {
+    'ACTIVITY': '参与活动',
+    'PURCHASE': '购买商品',
+    'SIGN_IN': '每日签到',
+    'SHARE': '分享推广',
+    'REFUND': '订单退款',
+    'EXCHANGE': '积分兑换',
+    'ADMIN': '管理员调整',
+    'OTHER': '其他'
+  },
+
+  // 获取积分变动类型的描述
+  getPointsChangeTypeDesc: function(type) {
+    return this.pointsChangeType[type] || '未知';
+  },
+
+  // 获取积分变动的符号（+或-）
+  getPointsChangeSymbol: function(amount) {
+    return amount > 0 ? '+' : '';
+  },
+
+  // 格式化积分变动金额，显示符号和千分位
+  formatPointsChange: function(amount) {
+    var symbol = this.getPointsChangeSymbol(amount);
+    var absAmount = Math.abs(amount);
+    return symbol + absAmount.toLocaleString();
+  },
+
+  // 格式化日期，将时间戳转换为YYYY-MM-DD HH:mm:ss格式
+  formatDate: function(timestamp) {
+    if (!timestamp) return '';
+
+    // 如果是字符串类型，转换为数字
+    if (typeof timestamp === 'string') {
+      timestamp = parseInt(timestamp, 10);
+    }
+
+    // 如果时间戳是10位，转换为13位（毫秒）
+    if (timestamp.toString().length === 10) {
+      timestamp *= 1000;
+    }
+
+    var date = getDate(timestamp);
+    var year = date.getFullYear();
+    var month = this.padZero(date.getMonth() + 1);
+    var day = this.padZero(date.getDate());
+    var hours = this.padZero(date.getHours());
+    var minutes = this.padZero(date.getMinutes());
+    var seconds = this.padZero(date.getSeconds());
+
+    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+  },
+
+  // 补零函数，确保数字为两位数
+  padZero: function(num) {
+    return num < 10 ? '0' + num : num;
+  }
+};
+
+module.exports = {
+  getPointsChangeTypeDesc: dictionary.getPointsChangeTypeDesc,
+  getPointsChangeSymbol: dictionary.getPointsChangeSymbol,
+  formatPointsChange: dictionary.formatPointsChange,
+  formatDate: dictionary.formatDate
+};
