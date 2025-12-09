@@ -1,0 +1,82 @@
+// 消息相关的WXS工具函数
+
+/**
+ * 根据消息类型获取对应的图标名称
+ * @param {string} type 消息类型 (activity, order, points, system)
+ * @returns {string} 图标名称
+ */
+function getMessageIcon(type) {
+  if (type === 'activity') {
+    return 'flag';
+  } else if (type === 'order') {
+    return 'cart';
+  } else if (type === 'points') {
+    return 'gift';
+  } else {
+    return 'info';
+  }
+}
+
+/**
+ * 根据消息类型获取对应的图标类名
+ * @param {string} type 消息类型
+ * @returns {string} 类名
+ */
+function getMessageIconClass(type) {
+  return type || 'system';
+}
+
+/**
+ * 根据消息已读状态获取对应的消息项类名
+ * @param {boolean} isRead 是否已读
+ * @returns {string} 类名
+ */
+function getMessageItemClass(isRead) {
+  return isRead ? 'read' : 'unread';
+}
+
+/**
+ * 判断是否显示未读标识
+ * @param {boolean} isRead 是否已读
+ * @returns {boolean} 是否显示
+ */
+function shouldShowUnreadDot(isRead) {
+  return !isRead;
+}
+
+/**
+ * 根据未读数量判断是否显示"全部已读"按钮
+ * @param {number} unreadCount 未读数量
+ * @returns {boolean} 是否显示
+ */
+function shouldShowMarkAllReadBtn(unreadCount) {
+  return unreadCount > 0;
+}
+
+/**
+ * 根据消息列表长度判断是否显示"清空消息"按钮
+ * @param {number} listLength 列表长度
+ * @returns {boolean} 是否显示
+ */
+function shouldShowClearAllBtn(listLength) {
+  return listLength > 0;
+}
+
+/**
+ * 根据消息列表长度判断是否显示消息列表
+ * @param {number} listLength 列表长度
+ * @returns {boolean} 是否显示
+ */
+function shouldShowMessageList(listLength) {
+  return listLength > 0;
+}
+
+module.exports = {
+  getMessageIcon: getMessageIcon,
+  getMessageIconClass: getMessageIconClass,
+  getMessageItemClass: getMessageItemClass,
+  shouldShowUnreadDot: shouldShowUnreadDot,
+  shouldShowMarkAllReadBtn: shouldShowMarkAllReadBtn,
+  shouldShowClearAllBtn: shouldShowClearAllBtn,
+  shouldShowMessageList: shouldShowMessageList
+};
