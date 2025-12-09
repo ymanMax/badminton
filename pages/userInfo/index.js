@@ -11,6 +11,7 @@ Page({
       { icon: 'orders-o', descp: '场馆预约', url: '/pages/place_order/index' },
       { icon: 'fire-o', descp: '我的活动', url: '/pages/act_order/index' },
       { icon: 'bag-o', descp: '商品订单', url: '/pages/orderInfo/index' },
+      { icon: 'star-o', descp: '我的收藏', url: '/pages/favorites/index' },
       { icon: 'service-o', descp: '意见反馈', url: '' },
     ],
   },
