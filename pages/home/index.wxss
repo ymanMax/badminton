@@ -127,3 +127,22 @@ picker{
 .venue-info-container{
   border-bottom: 1px solid #eee;
 }
+
+/* 收藏按钮 */
+.favorite-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.list-item {
+  position: relative;
+}

@@ -1,0 +1,28 @@
+<view class="favorites-container">
+  <!-- 收藏列表 -->
+  <scroll-view scroll-y class="favorites-list" wx:if="{{ favoriteSites.length }}">
+    <block wx:for="{{ favoriteSites }}" wx:key="id">
+      <view class="favorite-item" bind:tap="navigateToSite" data-id="{{ item.id }}">
+        <image src="{{ item.image }}" mode="aspectFill" class="item-img" />
+        <view class="item-content flex flex-column justify-content-between">
+          <text class="item-title">{{ item.name }}</text>
+          <text class="item-desc">距离：{{ item.distance }}km | 评分：{{ item.score }}</text>
+          <text class="item-address">场馆地址：{{ item.address }}</text>
+        </view>
+        <!-- 删除收藏按钮 -->
+        <view class="delete-btn" bindtap="removeFavorite" data-id="{{ item.id }}" catchtap="stopPropagation">
+          <van-icon name="delete-o" size="28rpx" color="#ff4d4f" />
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 空状态 -->
+  <van-empty
+    image="/images/empty.png"
+    description="暂无收藏的场馆"
+    wx:else
+  >
+    <button class="empty-btn" bindtap="goToHome">去看看场馆</button>
+  </van-empty>
+</view>

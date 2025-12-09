@@ -21,7 +21,8 @@
     "pages/choose/index",
     "pages/orderDetail/index",
     "pages/msgInfo/index",
-    "pages/stats/index"
+    "pages/stats/index",
+    "pages/favorites/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

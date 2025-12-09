@@ -38,12 +38,15 @@
 <scroll-view scroll-y class="list-container" wx:if="{{ listData.length }}">
     <block wx:for="{{listData}}" wx:key="id">
         <view class="list-item" bind:tap="navigateToSite" data-id="{{ item.id }}">
-            <image src="{{imgHost}}{{item.image}}" mode="aspectFill" class="item-img" />
+            <image src="{{item.image}}" mode="aspectFill" class="item-img" />
             <view class="item-content flex flex-column justify-content-between">
                 <text class="item-title">{{item.name}}</text>
-                <text class="item-desc flex1">{{item.description}}</text>
-                <text class="item-price" style="margin-top: 20rpx;">营业时间：{{item.openHours}}</text>
+                <text class="item-desc flex1">距离：{{item.distance}}km | 评分：{{item.score}}</text>
                 <text class="item-price">场馆地址：{{item.address}}</text>
+            </view>
+            <!-- 收藏按钮 -->
+            <view class="favorite-btn" bindtap="toggleFavorite" data-id="{{ item.id }}" catchtap="stopPropagation">
+                <van-icon name="{{ favorites.indexOf(item.id) > -1 ? 'star' : 'star-o' }}" size="32rpx" color="{{ favorites.indexOf(item.id) > -1 ? '#ffd700' : '#ccc' }}" />
             </view>
         </view>
     </block>

@@ -119,4 +119,83 @@ module.exports = {
     };
     this.toast(msg);
   },
+
+  // 本地存储相关方法
+  storage: {
+    // 设置存储
+    set: function(key, value) {
+      try {
+        wx.setStorageSync(key, value);
+        return true;
+      } catch (e) {
+        console.error(`设置存储失败，key: ${key}`, e);
+        return false;
+      }
+    },
+
+    // 获取存储
+    get: function(key, defaultValue = null) {
+      try {
+        const value = wx.getStorageSync(key);
+        return value !== '' ? value : defaultValue;
+      } catch (e) {
+        console.error(`获取存储失败，key: ${key}`, e);
+        return defaultValue;
+      }
+    },
+
+    // 删除存储
+    remove: function(key) {
+      try {
+        wx.removeStorageSync(key);
+        return true;
+      } catch (e) {
+        console.error(`删除存储失败，key: ${key}`, e);
+        return false;
+      }
+    },
+
+    // 清除所有存储
+    clear: function() {
+      try {
+        wx.clearStorageSync();
+        return true;
+      } catch (e) {
+        console.error('清除所有存储失败', e);
+        return false;
+      }
+    },
+
+    // 添加收藏
+    addFavorite: function(siteId) {
+      const favorites = this.get('favorites', []);
+      if (favorites.indexOf(siteId) === -1) {
+        favorites.push(siteId);
+        return this.set('favorites', favorites);
+      }
+      return false;
+    },
+
+    // 移除收藏
+    removeFavorite: function(siteId) {
+      const favorites = this.get('favorites', []);
+      const index = favorites.indexOf(siteId);
+      if (index > -1) {
+        favorites.splice(index, 1);
+        return this.set('favorites', favorites);
+      }
+      return false;
+    },
+
+    // 检查是否收藏
+    isFavorite: function(siteId) {
+      const favorites = this.get('favorites', []);
+      return favorites.indexOf(siteId) > -1;
+    },
+
+    // 获取所有收藏
+    getFavorites: function() {
+      return this.get('favorites', []);
+    }
+  }
 };

@@ -1,0 +1,92 @@
+/* 页面容器 */
+.favorites-container {
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 收藏列表 */
+.favorites-list {
+  height: 100%;
+}
+
+/* 收藏项 */
+.favorite-item {
+  display: flex;
+  padding: 20rpx;
+  margin: 20rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* 场馆图片 */
+.item-img {
+  width: 30%;
+  height: 160rpx;
+  border-radius: 8rpx;
+}
+
+/* 场馆内容 */
+.item-content {
+  width: 60%;
+  padding-left: 20rpx;
+}
+
+/* 场馆名称 */
+.item-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+/* 场馆描述 */
+.item-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+/* 场馆地址 */
+.item-address {
+  font-size: 24rpx;
+  color: #999;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 删除收藏按钮 */
+.delete-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(255, 77, 79, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 空状态按钮 */
+.empty-btn {
+  background: #55bf9b;
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 20rpx 40rpx;
+  margin-top: 40rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.empty-btn::after {
+  border: none;
+}

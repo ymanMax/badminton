@@ -1,4 +1,5 @@
 const app = getApp();
+const siteData = require('../../site.json'); // 导入mock场馆数据
 
 Page({
   data: {
@@ -22,69 +23,102 @@ Page({
     venueOptions: [],
     selectedVenue: '0',
     activeIndex: '',
+    favorites: [], // 收藏的场馆ID列表
   },
   onLoad() {
-    this.getDict();
+    this.loadFavorites(); // 加载本地存储的收藏数据
+    this.setMockData(); // 设置mock场馆数据
+    this.setVenueOptions(); // 设置场馆类型选项
   },
-  getDict() {
-    app.request('post', 'common/getDictTypeList', {}, (res) => {
-      if (res.code == '0000') {
-        const tempArr = res.data.find(item => item.dictCode == 'stadium_type').dictDataModelList || [];
-        this.setData({
-          venueOptions: tempArr,
-          activeIndex: tempArr[0].dictValue,
-        });
-        this.getListData();
-        this.getHotData();
-        return;
-      }
-      app.toast(res.msg);
+  // 设置mock场馆数据
+  setMockData() {
+    this.setData({
+      listData: siteData
     });
   },
-  getHotData() {
-    app.request('post', 'applet/badminton/activity/getPageList', {
-      page: {
-        pages: 0,
-        size: 200
-      },
-      query: {}
-    }, (res) => {
-      if (res.code == '0000') {
-        const {
-          records
-        } = res.data;
-        this.setData({
-          hotData: records.slice(0, 2),
-        });
-        return;
-      }
-      app.toast(res.msg);
+
+  // 设置场馆类型选项
+  setVenueOptions() {
+    const venueOptions = [
+      { dictValue: '0', dictLabel: '全部场馆' },
+      { dictValue: '1', dictLabel: '室内场馆' },
+      { dictValue: '2', dictLabel: '室外场馆' }
+    ];
+    this.setData({
+      venueOptions: venueOptions,
+      activeIndex: venueOptions[0].dictValue,
     });
   },
+
+  // 加载本地存储的收藏数据
+  loadFavorites() {
+    try {
+      const favorites = wx.getStorageSync('favorites') || [];
+      this.setData({
+        favorites: favorites
+      });
+    } catch (e) {
+      console.error('加载收藏数据失败:', e);
+    }
+  },
+
+  // 保存收藏数据到本地存储
+  saveFavorites() {
+    try {
+      wx.setStorageSync('favorites', this.data.favorites);
+    } catch (e) {
+      console.error('保存收藏数据失败:', e);
+    }
+  },
+
+  // 收藏/取消收藏场馆
+  toggleFavorite(e) {
+    const siteId = parseInt(e.currentTarget.dataset.id);
+    const favorites = [...this.data.favorites];
+    const index = favorites.indexOf(siteId);
+
+    if (index > -1) {
+      // 取消收藏
+      favorites.splice(index, 1);
+      wx.showToast({
+        title: '已取消收藏',
+        icon: 'success'
+      });
+    } else {
+      // 添加收藏
+      favorites.push(siteId);
+      wx.showToast({
+        title: '已添加收藏',
+        icon: 'success'
+      });
+    }
+
+    this.setData({
+      favorites: favorites
+    });
+
+    // 保存到本地存储
+    this.saveFavorites();
+  },
+
+  // 检查场馆是否已收藏
+  isFavorite(siteId) {
+    return this.data.favorites.indexOf(siteId) > -1;
+  },
+
+  // 根据场馆类型过滤数据
   getListData() {
-    app.request('post', 'applet/badminton/stadium/getPageList', {
-      page: {
-        pages: 0,
-        size: 200
-      },
-      query: {
-        placeType: this.data.activeIndex,
-      }
-    }, (res) => {
-      if (res.code == '0000') {
-        const {
-          records,
-          current,
-          pages
-        } = res.data;
-        this.setData({
-          allPage: pages,
-          currentPage: current,
-          listData: this.data.currentPage != 1 ? [...this.data.listData, ...records] : records,
-        });
-        return;
-      }
-      app.toast(res.msg);
+    const { activeIndex } = this.data;
+    let filteredData = siteData;
+
+    if (activeIndex !== '0') {
+      // 这里可以根据实际需求添加过滤逻辑
+      // 目前mock数据中没有placeType字段，所以暂时不做过滤
+      // filteredData = siteData.filter(item => item.placeType === activeIndex);
+    }
+
+    this.setData({
+      listData: filteredData
     });
   },
   pageSkip() {
@@ -107,5 +141,10 @@ Page({
       selectedVenue: index
     });
     this.getListData();
+  },
+
+  // 阻止事件冒泡
+  stopPropagation() {
+    // 空方法，用于阻止事件冒泡
   }
 })
